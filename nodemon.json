@@ -1,0 +1,8 @@
+{
+    "env": {
+        "DB_PORT": "27017",
+        "DB_HOST": "localhost",
+        "DB_NAME": "my_database",
+        "JWT_KEY": "secret-key"
+    }
+}
