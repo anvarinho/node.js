@@ -5,14 +5,13 @@ const Location = require('../models/location');
 
 exports.get_places = (req, res, next) => {    
     Place.find()
-        .select('name title keywords location created _id')
+        .select('name title keywords location description image created _id')
         .populate('location', 'longitude latitude')
         .exec()
         .then(docs => {
             const response = {
                 count: docs.length,
                 places: docs.map(doc => {
-                    // console.log(doc.location) 
                     return {
                         // name: doc.name,
                         // title: doc.title,
@@ -89,13 +88,13 @@ exports.create_place = (req, res, next) => {
 exports.get_place_by_id = (req, res, next) => {
     const id = req.params.placeId;
     Place.findById(id)
-        .select('name title image _id')
+        .select('name title image description _id')
         .exec()
         .then(doc => { 
             console.log(doc);
             if (doc){
                 res.status(200).json({
-                    product: doc,
+                    place: doc,
                     request:{
                         type: 'GET',
                         url: 'http://127.0.0.1:3000/places/'

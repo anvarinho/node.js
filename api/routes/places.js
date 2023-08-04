@@ -29,9 +29,8 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-const Place = require('../models/place');
-const Location = require('../models/location');
-
+// const Place = require('../models/place');
+// const Location = require('../models/location');
 
 router.get('/', PlacesController.get_places)
 
