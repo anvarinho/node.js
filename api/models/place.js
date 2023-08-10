@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const placeSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true},
+    url: { type: String, required: true},
+    region: { type: String, required: true},
     title: { type: String, required: true},
     description: { type: String, required: true},
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },

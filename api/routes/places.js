@@ -36,7 +36,9 @@ router.get('/', PlacesController.get_places)
 
 router.post('/', checkAuth, upload.single('placeImage'), PlacesController.create_place)
 
-router.get('/:placeId', PlacesController.get_place_by_id)
+// router.get('/:placeId', PlacesController.get_place_by_id)
+
+router.get('/:placeId', PlacesController.getPlaceByUrl)
 
 router.patch('/:placeId', checkAuth, PlacesController.edit_place)
 

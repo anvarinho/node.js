@@ -5,7 +5,7 @@ const Location = require('../models/location');
 
 exports.get_places = (req, res, next) => {    
     Place.find()
-        .select('name title keywords location description image created _id')
+        .select('name url title created keywords region weather description location image created _id')
         .populate('location', 'longitude latitude')
         .exec()
         .then(docs => {
@@ -22,7 +22,7 @@ exports.get_places = (req, res, next) => {
                         place: doc,
                         request:{
                             type: 'GET',
-                            url: 'http://127.0.0.1:3000/places/' + doc._id
+                            url: 'http://127.0.0.1:3000/places/' + doc.url
                         }
                     }
                 })
@@ -88,7 +88,8 @@ exports.create_place = (req, res, next) => {
 exports.get_place_by_id = (req, res, next) => {
     const id = req.params.placeId;
     Place.findById(id)
-        .select('name title image description _id')
+        .select('name url location keywords region title image description _id')
+        .populate('location', 'longitude latitude')
         .exec()
         .then(doc => { 
             console.log(doc);
@@ -110,6 +111,31 @@ exports.get_place_by_id = (req, res, next) => {
         }) 
 }
 
+exports.getPlaceByUrl = async (req, res) => {
+    try {
+      const url = req.params.placeId; // Assuming the URL parameter is named 'url'
+    //   console.log(url)
+      const doc = await Place.findOne({ url })
+        .select('name url keywords location title image description _id')
+        .populate('location', 'longitude latitude')
+        .exec();
+      if (doc) {
+        res.status(200).json({
+          place: doc,
+          request: {
+            type: 'GET',
+            url: `http://127.0.0.1:3000/places/${url}`,
+          },
+        });
+      } else {
+        res.status(404).json({ message: "No valid entry found for provided URL" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  };
+  
 exports.edit_place = (req, res, next) => {
     const id = req.params.placeId;
     const updateOps = {};
