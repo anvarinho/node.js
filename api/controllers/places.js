@@ -5,8 +5,9 @@ const Location = require('../models/location');
 
 exports.get_places = (req, res, next) => {    
     Place.find()
-        .select('name url title created keywords region weather description location image created _id')
-        .populate('location', 'longitude latitude')
+        // .limit(10)
+        .select('url region weather image created name _id')
+        // .populate('location', 'longitude latitude')
         .exec()
         .then(docs => {
             const response = {
@@ -113,12 +114,16 @@ exports.get_place_by_id = (req, res, next) => {
 
 exports.getPlaceByUrl = async (req, res) => {
     try {
-      const url = req.params.placeId; // Assuming the URL parameter is named 'url'
-    //   console.log(url)
-      const doc = await Place.findOne({ url })
-        .select('name url keywords location title image description _id')
+      const url = req.params.placeId; // Assuming the URL parameter is named 'placeId'
+      const doc = await Place.findOneAndUpdate(
+        { url }, // Filter by URL
+        { $inc: { viewCount: 0.5 } }, // Increment the viewCount field by 1
+        { new: true } // Return the updated document
+      )
+        .select('name url viewCount keywords location weather created title image description _id viewCount') // Include the viewCount field
         .populate('location', 'longitude latitude')
         .exec();
+  
       if (doc) {
         res.status(200).json({
           place: doc,
@@ -134,7 +139,7 @@ exports.getPlaceByUrl = async (req, res) => {
       console.error(err);
       res.status(500).json({ error: err.message });
     }
-  };
+};
   
 exports.edit_place = (req, res, next) => {
     const id = req.params.placeId;
