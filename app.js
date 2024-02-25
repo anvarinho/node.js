@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const placeRoutes = require('./api/routes/places');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/user');
-const tourRoutes = require('./api/routes/tours')
+const tourRoutes = require('./api/routes/tours');
+const adminRoutes = require('./api/routes/admin')
 
 
 mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -42,6 +43,7 @@ app.use('/places', placeRoutes)
 app.use('/orders', orderRoutes)
 app.use('/user', userRoutes)
 app.use('/tours', tourRoutes)
+app.use('/admin', adminRoutes)
 
 app.use((req,res, next) => {
   const error = new Error("Not found");
