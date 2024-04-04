@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
 const Tour = require('../models/tour')
+const writeStats = require('../middleware/stats');
 
 exports.get_tours = (req, res, next) => {
+  writeStats(req, res)
     Tour.find()
-    .select('name url title level keywords image description _id')
+    .select('name url title level keywords images description days _id')
     // .populate('place', 'name')
     .exec()
     .then(docs => {
@@ -18,6 +20,7 @@ exports.get_tours = (req, res, next) => {
 
 exports.getTourByUrl = async (req, res) => {
     try {
+      writeStats(req, res)
       const url = req.params.tourId; // Assuming the URL parameter is named 'placeId'
 
       const doc = await Tour.findOneAndUpdate(
@@ -25,7 +28,7 @@ exports.getTourByUrl = async (req, res) => {
         { $inc: { viewCount: 1 } }, // Increment the viewCount field by 1
         { new: true } // Return the updated document
       )
-        .select('name url keywords title image created description viewCount')
+        .select('name url keywords title images created days description viewCount')
         .exec();
   
       if (doc) {

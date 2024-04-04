@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require('express-session');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
@@ -8,6 +9,7 @@ const placeRoutes = require('./api/routes/places');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/user');
 const tourRoutes = require('./api/routes/tours');
+const articleRoutes = require('./api/routes/articles')
 const adminRoutes = require('./api/routes/admin')
 
 
@@ -26,6 +28,14 @@ app.use('/uploads',express.static('uploads'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
+// Session middleware setup
+// app.use(session({
+//   secret: 'your_secret_key_here',
+//   resave: false,
+//   saveUninitialized: false,
+//   // Add more options as needed
+// }));
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -39,10 +49,11 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/places', placeRoutes)
+app.use('/api/places', placeRoutes)
 app.use('/orders', orderRoutes)
 app.use('/user', userRoutes)
 app.use('/tours', tourRoutes)
+app.use('/articles', articleRoutes)
 app.use('/admin', adminRoutes)
 
 app.use((req,res, next) => {

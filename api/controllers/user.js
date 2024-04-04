@@ -37,17 +37,18 @@ exports.signup = (req, res, next) =>{
 }
 
 exports.login = (req, res, next)=>{
+    console.log(req.body.email)
     User.find({ email: req.body.email })
         .exec()
         .then(user => {
-            console.log(user);
+            // console.log(user);
             if (user.length < 1) {
                 return res.status(401).json({
                 message: "Auth failed"
                 });
             }
-            console.log('Provided Password:', req.body.password);
-            console.log('Stored Password:', user[0].password);
+            // console.log('Provided Password:', req.body.password);
+            // console.log('Stored Password:', user[0].password);
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {
                 if (err){
                     console.error('Error during comparison:', err);
@@ -61,10 +62,10 @@ exports.login = (req, res, next)=>{
                             expiresIn: "1h"
                         }
                     )
-                    console.log('Password matched!');
-                    return res.status(200).json({ message: "Auth successful", token: token})
+                    // console.log('Password matched!');
+                    return res.status(200).json({ message: "Auth successful", token: token, user: user})
                 }
-                console.log('Password did not match!');
+                // console.log('Password did not match!');
                 res.status(401).json({ message: "Auth fails"})
             })
         }).catch(err => {
