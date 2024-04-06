@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Order = require("../models/order");
+// const Order = require("../models/order");
 const Place = require("../models/place");
 const Location = require("../models/location");
 const writeStats = require('../middleware/stats');
@@ -47,10 +47,6 @@ exports.get_more_places = (req, res, next) => {
       const response = {
         count: docs.length,
         places: docs.map((doc) => {
-          // console.log(`${doc.created} ${doc.url}`)
-          // Ensure that the language exists in the doc
-          // let name = doc.name[lang] ? doc.name[lang] : doc.name["en"];
-          // let region = doc.region[lang] ? doc.region[lang] : doc.region["en"];
           return {
             name: doc.name[lang],
             title: doc.title[lang],
@@ -177,6 +173,7 @@ exports.getPlaceByUrl = async (req, res) => {
         description: doc.description[lang],
         _id: doc._id,
         keywords: doc.keywords[lang],
+        sights: doc.sights,
         images: doc.images,
         region: doc.region[lang],
         viewCount: doc.viewCount,
@@ -235,23 +232,21 @@ exports.delete_place = (req, res, next) => {
       });
     });
 };
-
-
-
-
 exports.get_places_by_urls = (req, res, next) => {
   // Convert comma-separated string to an array of URLs
-  const urls = ['ala-kol-lake','ysyk-kol-lake','son-kol-lake','skazka-canyons','bishkek-city','sary-chelek-biosphere-reserve','ala-archa-national-park','jeti-oguz-canyons','altyn-arashan-valley','burana-tower','alay-valley','chunkurchak-gorge','tash-rabat-caravanserai','chon-ak-suu-gorge']
+  let { lang = "en",
+   urls = 'ala-kol-lake,ysyk-kol-lake,son-kol-lake,skazka-canyons,bishkek-city,sary-chelek-biosphere-reserve,ala-archa-national-park,jeti-oguz-canyons,altyn-arashan-valley,burana-tower,alay-valley,chunkurchak-gorge,tash-rabat-caravanserai,chon-ak-suu-gorge'
+  } = req.query;
+
   writeStats(req, res)
-  let { lang = "en" } = req.query;
-  Place.find({ url: { $in: urls } })
+  Place.find({ url: { $in: urls.split(",") } })
     .exec()
     .then((docs) => {
       const places = docs.map((doc) => ({
         url: doc.url,
         name: doc.name[lang],
         title: doc.title[lang],
-        description: doc.description[lang].substring(0, 300),
+        description: doc.description[lang].substring(0,300),
         _id: doc._id,
         images: doc.images,
         region: doc.region[lang],

@@ -11,6 +11,7 @@ const userRoutes = require('./api/routes/user');
 const tourRoutes = require('./api/routes/tours');
 const articleRoutes = require('./api/routes/articles')
 const adminRoutes = require('./api/routes/admin')
+const reviewRoutes = require('./api/routes/reviews')
 
 
 mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -50,10 +51,11 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/places', placeRoutes)
-app.use('/orders', orderRoutes)
-app.use('/user', userRoutes)
-app.use('/tours', tourRoutes)
-app.use('/articles', articleRoutes)
+app.use('/api/orders', orderRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/reviews', reviewRoutes)
+app.use('/api/tours', tourRoutes)
+app.use('/api/articles', articleRoutes)
 app.use('/admin', adminRoutes)
 
 app.use((req,res, next) => {

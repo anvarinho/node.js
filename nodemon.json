@@ -2,7 +2,7 @@
     "env": {
         "DB_PORT": "27017",
         "DB_HOST": "localhost",
-        "DB_NAME": "my_database",
+        "DB_NAME": "guidebook",
         "JWT_KEY": "secret-key"
     }
 }
