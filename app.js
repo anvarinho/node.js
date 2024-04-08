@@ -56,7 +56,7 @@ app.use('/api/user', userRoutes)
 app.use('/api/reviews', reviewRoutes)
 app.use('/api/tours', tourRoutes)
 app.use('/api/articles', articleRoutes)
-app.use('/admin', adminRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.use((req,res, next) => {
   const error = new Error("Not found");

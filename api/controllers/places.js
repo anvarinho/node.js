@@ -25,6 +25,7 @@ exports.get_places = (req, res, next) => {
           keywords: doc.keywords[lang],
           images: doc.images,
           region: doc.region[lang],
+          location: doc.location,
           weather: doc.weather,
       }));
       // console.log(response)
