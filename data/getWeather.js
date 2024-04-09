@@ -12,7 +12,7 @@ const cities = [
   { name: "Batken", url: "batken-town" },
 ];
 
-const appid = "12203a39a3f20b2e3d59ff3a6f23714b";
+const appid = process.env.WEATHER_API;
 
 async function fetchData(params, cityUrl) {
   try {
@@ -29,6 +29,7 @@ async function fetchData(params, cityUrl) {
         "weather.updated": new Date(),
       }
     );
+    // console.log(process.env.WEATHER_API)
     console.log(
       `${cityUrl}: ${data.weather[0].description}: ${data.weather[0].main}: ${
         data.weather[0].icon

@@ -17,7 +17,9 @@ exports.get_places = (req, res, next) => {
     // .populate('location', 'longitude latitude')
     .exec()
     .then((docs) => {
-      const places = docs.map((doc) => ({
+      const places = docs.map((doc) => {
+        console.log(doc.weather)
+        const place = {
           url: doc.url,
           name: doc.name[lang],
           title: doc.title[lang],
@@ -26,9 +28,13 @@ exports.get_places = (req, res, next) => {
           images: doc.images,
           region: doc.region[lang],
           location: doc.location,
-          weather: doc.weather,
-      }));
-      // console.log(response)
+          weather: doc.weather
+        };
+        if (doc.weather && !doc.weather.temp) {
+          delete place.weather;
+        }
+        return place;
+      });
       res.status(200).json(places);
     })
     .catch((err) => {
