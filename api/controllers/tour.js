@@ -58,6 +58,7 @@ exports.getTourByUrl = async (req, res) => {
         }));
 
         res.status(200).json({
+          _id: doc._id,
           url: doc.url,
           level: doc.level,
           price: doc.price,
