@@ -52,6 +52,7 @@ exports.getTourByUrl = async (req, res) => {
       if (doc) {
 
         const days = doc.days.map(day => ({
+          id: day._id,
           activities: day.activities[lang],
           images: day.images,
           places: day.places

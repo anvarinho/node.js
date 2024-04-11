@@ -47,6 +47,7 @@ const placeSchema = mongoose.Schema({
     excludings: { type: translationsSchema, required: true },
     days: [
     {
+      _id: mongoose.Schema.Types.ObjectId,
       activities: { type: translationsSchema, required: true },
       images: { type: [String] },
       places: { type: [String] }
