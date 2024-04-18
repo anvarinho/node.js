@@ -184,7 +184,7 @@ exports.getPlaceByUrl = async (req, res) => {
         images: doc.images,
         region: doc.region[lang],
         viewCount: doc.viewCount,
-        // location: doc.location,
+        location: doc.location,
         created: doc.created,
         // place: doc,
         request: {
