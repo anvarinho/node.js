@@ -83,6 +83,7 @@ exports.get_article_by_url = (req, res, next) => {
           paragraphs: translatedParagraphs,
           image: article.image,
           keywords: article.keywords[lang],
+          url:article.url
         });
       })
       .catch(err => {
