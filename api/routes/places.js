@@ -36,6 +36,7 @@ router.get('/', PlacesController.get_places)
 router.get('/more', PlacesController.get_more_places)
 router.get('/home', PlacesController.get_places_by_urls)
 router.get('/ios', PlacesController.get_places_ios)
+router.get('/region', PlacesController.get_places_by_region)
 
 router.post('/', checkAuth, upload.single('placeImage'), PlacesController.create_place)
 

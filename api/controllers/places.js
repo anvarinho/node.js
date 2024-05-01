@@ -291,3 +291,33 @@ exports.get_places_ios = (req, res, next) => {
       res.status(500).json(err);
     });
 };
+
+exports.get_places_by_region = (req, res, next) => {
+  let { lang = "en", region = "Osh Region", url = "" } = req.query;
+  writeStats(req, res);
+  Place.aggregate([
+    { $match: { 
+      [`region.${lang}`]: region,
+      url: { $ne: url }
+    } }, // Filter by region and exclude documents with the specified URL
+    { $sample: { size: 6 } } // Randomly select 6 documents
+  ])
+    .exec()
+    .then((docs) => {
+      const places = docs.map((doc) => ({
+        url: doc.url,
+        name: doc.name[lang],
+        title: doc.title[lang],
+        id: doc._id,
+        images: doc.images,
+        region: doc.region[lang],
+        created: doc.created,
+        location: doc.location
+      }));
+      res.status(200).json(places);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
