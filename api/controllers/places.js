@@ -186,6 +186,7 @@ exports.getPlaceByUrl = async (req, res) => {
         viewCount: doc.viewCount,
         location: doc.location,
         created: doc.created,
+        videoID:doc.videoID,
         // place: doc,
         request: {
           type: "GET",

@@ -32,6 +32,7 @@ const placeSchema = mongoose.Schema({
   images: { type: [String], required: true },
   sights: { type: [String], required: false },
   viewCount: { type: Number, default: 0 },
+  videoID: { type: String, required: false },
   weather: {
     temp: { type: String },
     main: { type: String },
