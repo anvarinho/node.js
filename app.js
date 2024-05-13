@@ -13,7 +13,8 @@ const articleRoutes = require('./api/routes/articles')
 const adminRoutes = require('./api/routes/admin')
 const reviewRoutes = require('./api/routes/reviews')
 
-mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { useNewUrlParser: true, useUnifiedTopology: true })
+// console.log(process.env.DB_PASSWORD)
+mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?authSource=${process.env.DB_WITH_CREDENTIALS}`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   })

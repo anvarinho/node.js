@@ -5,6 +5,7 @@
         "DB_NAME": "guidebook",
         "DB_USERNAME": "admin",
         "DB_PASSWORD": "Password",
+        "DB_WITH_CREDENTIALS": "admin",
         "JWT_KEY": "secret-key",
         "WEATHER_API": "12203a39a3f20b2e3d59ff3a6f23714b"
     }
