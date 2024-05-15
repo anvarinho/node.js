@@ -23,7 +23,8 @@ exports.get_tours = (req, res, next) => {
         lastPrice: { $arrayElemAt: ["$price", -1] },
         daysCount: { $size: "$days" }  // Calculate the size of the "days" array
       }
-    }
+    },
+    { $sort: { daysCount: 1 } }
   ]).exec()
     .then(docs => {
       res.status(200).json(docs);
