@@ -185,6 +185,7 @@ exports.getPlaceByUrl = async (req, res) => {
         region: doc.region[lang],
         viewCount: doc.viewCount,
         location: doc.location,
+        weather: doc.weather,
         created: doc.created,
         videoID:doc.videoID,
         // place: doc,
